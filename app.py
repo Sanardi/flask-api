@@ -40,7 +40,6 @@ def hello_world():
 
 @app.route('/all', methods=['GET'])
 def return_all_data():
-    # available = ["news", "tech"]
     urls = []
     for category in available:
         data = eval("news." + category.capitalize() + "()")
