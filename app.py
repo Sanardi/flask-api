@@ -16,6 +16,7 @@ from models import scraper, news
 app = Flask(__name__)
 app.config['SECRET_KEY'] = config.Config.SECRET_KEY
 count = 435
+available = ["news", "tech"]
 
 ########################################################################################
 
@@ -39,7 +40,7 @@ def hello_world():
 
 @app.route('/all', methods=['GET'])
 def return_all_data():
-    available = ["news", "tech"]
+    # available = ["news", "tech"]
     urls = []
     for category in available:
         data = eval("news." + category.capitalize() + "()")
@@ -55,13 +56,13 @@ def return_all_data():
 
 @app.route('/category/<category>/<channel>', methods=['GET'])
 def return_channel_data(channel=None, category = None):
-    allowed = ["news", "tech"]
-    if category not in allowed:
+    
+    if category not in available:
         response = "Valid types are: news, tech. "   
         return jsonify(response)
     else:
         data = eval("news." + category.capitalize() + "()")
-        #data = news.Tech()
+
         urls = data.get_properties()[str(channel)]
         result = scraper.Scrape()
         result.urls = [urls]
@@ -71,8 +72,7 @@ def return_channel_data(channel=None, category = None):
 
 @app.route('/category/<category>', methods=['GET'])
 def return_category_data(channel=None, category = None):
-    allowed = ["news", "tech"]
-    if category not in allowed:
+    if category not in available:
         response = "Valid types are: news, tech. "   
         return jsonify(response)
     else:
