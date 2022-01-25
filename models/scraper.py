@@ -34,6 +34,8 @@ class Scrape:
     def news_rss(self):
 
         all_articles = []
+        content = {}
+        # content["time"] = int(time.time()) 
         for url in self.urls:
         
             try:
@@ -53,13 +55,17 @@ class Scrape:
                         'published': pubdate,
                         } 
                     all_articles.append(article)
-                content = {'time': int(time.time()) , 'articles': sorted(all_articles, key=lambda article: article['published'], reverse=True) }
-                return content
-
+                #content = {'time': int(time.time()) , 'articles': sorted(all_articles, key=lambda article: article['published'], reverse=True) }
+            
 
             except Exception:
                 print(traceback.print_exc())
                 time.sleep(1)
+            
+        content = {'time': int(time.time()) , 'articles': sorted(all_articles, key=lambda article: article['published'], reverse=True) }
+
+        return content
+
 
 
 if __name__ == "__main__":

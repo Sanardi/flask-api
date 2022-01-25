@@ -43,9 +43,10 @@ def return_all_data():
     urls = []
     for category in available:
         data = eval("news." + category.capitalize() + "()")
-        urls += data.get_properties().values()
-
+        cat_urls = data.get_properties().values()
+        urls += cat_urls
     result = scraper.Scrape()
+    print(urls)
     result.urls = urls
     response = result.news_rss()
     return jsonify(response)
