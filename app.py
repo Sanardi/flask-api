@@ -76,6 +76,7 @@ def return_category_data(channel=None, category = None):
         response = "Valid types are: news, tech. "   
         return jsonify(response)
     else:
+        
         data = eval("news." + category.capitalize() + "()")
         urls = data.get_properties().values()
         result = scraper.Scrape()
